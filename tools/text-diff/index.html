@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparador de Textos - ToolsHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#0f172a',
+                        card: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .diff-added {
+            background-color: #86efac;
+            color: #166534;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .diff-removed {
+            background-color: #fca5a5;
+            color: #991b1b;
+            padding: 2px 4px;
+            border-radius: 3px;
+            text-decoration: line-through;
+        }
+
+        .dark .diff-added {
+            background-color: #166534;
+            color: #86efac;
+        }
+
+        .dark .diff-removed {
+            background-color: #991b1b;
+            color: #fca5a5;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-dark text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-dark/80 backdrop-blur-md">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse group">
+                <svg class="w-6 h-6 text-gray-500 group-hover:text-primary transition-colors" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span
+                    class="self-center text-2xl font-bold whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">ToolsHub</span>
+            </a>
+            <button id="theme-toggle" type="button"
+                class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zM12 10a2 2 0 11-4 0 2 2 0 014 0z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+        <h1 class="text-3xl font-bold mb-6 text-center">Comparador de Textos</h1>
+
+        <div class="bg-white dark:bg-card rounded-2xl shadow-lg p-6 mb-8 border border-gray-200 dark:border-gray-700">
+
+            <!-- Input Areas -->
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Texto Original</label>
+                    <textarea id="text1" rows="10"
+                        class="w-full p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary outline-none resize-none"
+                        placeholder="Pega el texto original aquí..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Texto Modificado</label>
+                    <textarea id="text2" rows="10"
+                        class="w-full p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary outline-none resize-none"
+                        placeholder="Pega el texto modificado aquí..."></textarea>
+                </div>
+            </div>
+
+            <!-- Compare Button -->
+            <button onclick="comparTexts()"
+                class="w-full px-4 py-3 bg-primary hover:bg-blue-600 text-white rounded-lg font-medium transition-colors mb-6">
+                Comparar Textos
+            </button>
+
+            <!-- Results -->
+            <div id="results" class="hidden">
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-green-100 dark:bg-green-900/30 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-green-600 dark:text-green-400" id="added-count">0</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Añadido</div>
+                    </div>
+                    <div class="bg-red-100 dark:bg-red-900/30 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-red-600 dark:text-red-400" id="removed-count">0</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Eliminado</div>
+                    </div>
+                    <div class="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="similarity">0%</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Similitud</div>
+                    </div>
+                </div>
+
+                <!-- Diff Display -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Diferencias</label>
+                    <div id="diff-output"
+                        class="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl min-h-[200px] whitespace-pre-wrap">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/app.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

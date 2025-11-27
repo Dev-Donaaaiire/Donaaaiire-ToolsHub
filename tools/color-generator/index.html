@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas de Color - ToolsHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#EC4899',
+                        dark: '#0f172a',
+                        card: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .color-swatch {
+            transition: all 0.3s ease;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-dark text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-dark/80 backdrop-blur-md">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse group">
+                <svg class="w-6 h-6 text-gray-500 group-hover:text-accent transition-colors" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span
+                    class="self-center text-2xl font-bold whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">ToolsHub</span>
+            </a>
+            <button id="theme-toggle" type="button"
+                class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zM12 10a2 2 0 11-4 0 2 2 0 014 0z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        <h1 class="text-3xl font-bold mb-8 text-center">Herramientas de Color</h1>
+
+        <!-- Tabs -->
+        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab"
+                data-tabs-toggle="#default-tab-content" role="tablist">
+                <li class="mr-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg text-accent border-accent" id="hex-tab"
+                        data-tabs-target="#hex" type="button" role="tab" aria-controls="hex"
+                        aria-selected="true">Generador Hex</button>
+                </li>
+                <li class="mr-2" role="presentation">
+                    <button
+                        class="inline-block p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                        id="palette-tab" data-tabs-target="#palette" type="button" role="tab" aria-controls="palette"
+                        aria-selected="false">Paleta de Colores</button>
+                </li>
+            </ul>
+        </div>
+
+        <div id="default-tab-content">
+            <!-- Hex Generator Tab -->
+            <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="hex" role="tabpanel" aria-labelledby="hex-tab">
+                <div class="flex flex-col items-center justify-center py-12">
+                    <div id="hex-preview"
+                        class="w-48 h-48 rounded-full shadow-2xl mb-8 transition-colors duration-500 flex items-center justify-center cursor-pointer group"
+                        title="Copiar Hex">
+                        <svg class="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h2 id="hex-value"
+                        class="text-4xl font-mono font-bold mb-2 cursor-pointer hover:text-accent transition-colors">
+                        #FFFFFF</h2>
+                    <p id="rgb-value" class="text-gray-500 dark:text-gray-400 mb-8 font-mono">rgb(255, 255, 255)</p>
+                    <button id="generate-hex-btn"
+                        class="py-3 px-8 text-white bg-accent hover:bg-pink-600 rounded-xl font-bold text-lg shadow-lg hover:shadow-accent/50 transition-all transform hover:-translate-y-0.5">
+                        Generar Color
+                    </button>
+                </div>
+            </div>
+
+            <!-- Palette Generator Tab -->
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="palette" role="tabpanel"
+                aria-labelledby="palette-tab">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 h-96 md:h-64" id="palette-container">
+                    <!-- Palette colors will be injected here -->
+                </div>
+                <div class="flex justify-center gap-4">
+                    <button id="generate-palette-btn"
+                        class="py-3 px-8 text-white bg-accent hover:bg-pink-600 rounded-xl font-bold text-lg shadow-lg hover:shadow-accent/50 transition-all transform hover:-translate-y-0.5">
+                        Generar Paleta
+                    </button>
+                    <button id="save-palette-btn"
+                        class="py-3 px-6 text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600 rounded-xl font-bold shadow-sm transition-all">
+                        Guardar Favorita
+                    </button>
+                </div>
+
+                <!-- Saved Palettes -->
+                <div class="mt-12">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Paletas Guardadas</h3>
+                        <button id="clear-palettes" class="text-sm text-red-500 hover:text-red-600">Borrar todo</button>
+                    </div>
+                    <div id="saved-palettes" class="space-y-4">
+                        <!-- Saved palettes will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/app.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
