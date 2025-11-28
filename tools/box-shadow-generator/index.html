@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Box Shadow - ToolsHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#0f172a',
+                        card: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-dark text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+    <!-- Navbar -->
+    <nav
+        class="fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-dark/80 backdrop-blur-md">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span
+                    class="self-center text-2xl font-bold whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">ToolsHub</span>
+            </a>
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <a href="../../index.html"
+                    class="text-white bg-primary hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary dark:hover:bg-blue-700 dark:focus:ring-blue-800">Volver</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-24 pb-12 px-4 mx-auto max-w-screen-xl">
+        <div class="text-center mb-12">
+            <h1
+                class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl dark:text-white">
+                Generador de <span class="text-indigo-500">Box Shadow</span></h1>
+            <p class="text-lg font-normal text-gray-500 dark:text-gray-400">Crea sombras CSS perfectas visualmente y
+                copia el código.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Controls -->
+            <div class="glass-panel p-6 rounded-2xl">
+                <h2 class="text-xl font-bold mb-6 text-gray-900 dark:text-white">Configuración</h2>
+
+                <div class="space-y-6">
+                    <!-- Horizontal Offset -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-medium text-gray-900 dark:text-gray-300">Desplazamiento
+                                Horizontal (X)</label>
+                            <span id="x-val" class="text-sm text-gray-500 dark:text-gray-400">0px</span>
+                        </div>
+                        <input type="range" id="x-offset" min="-100" max="100" value="0"
+                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                    </div>
+
+                    <!-- Vertical Offset -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-medium text-gray-900 dark:text-gray-300">Desplazamiento Vertical
+                                (Y)</label>
+                            <span id="y-val" class="text-sm text-gray-500 dark:text-gray-400">10px</span>
+                        </div>
+                        <input type="range" id="y-offset" min="-100" max="100" value="10"
+                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                    </div>
+
+                    <!-- Blur Radius -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-medium text-gray-900 dark:text-gray-300">Desenfoque
+                                (Blur)</label>
+                            <span id="blur-val" class="text-sm text-gray-500 dark:text-gray-400">15px</span>
+                        </div>
+                        <input type="range" id="blur-radius" min="0" max="100" value="15"
+                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                    </div>
+
+                    <!-- Spread Radius -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-medium text-gray-900 dark:text-gray-300">Propagación
+                                (Spread)</label>
+                            <span id="spread-val" class="text-sm text-gray-500 dark:text-gray-400">-3px</span>
+                        </div>
+                        <input type="range" id="spread-radius" min="-50" max="50" value="-3"
+                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                    </div>
+
+                    <!-- Color & Opacity -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Color
+                                Sombra</label>
+                            <input type="color" id="shadow-color" value="#000000"
+                                class="w-full h-10 rounded cursor-pointer">
+                        </div>
+                        <div>
+                            <label
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Opacidad</label>
+                            <input type="range" id="shadow-opacity" min="0" max="1" step="0.01" value="0.3"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 mt-2">
+                        </div>
+                    </div>
+
+                    <!-- Inset Checkbox -->
+                    <div class="flex items-center">
+                        <input id="inset-check" type="checkbox" value=""
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="inset-check"
+                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sombra interna
+                            (Inset)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview & Code -->
+            <div class="space-y-8">
+                <!-- Preview Area -->
+                <div class="glass-panel p-12 rounded-2xl flex items-center justify-center min-h-[400px] bg-white dark:bg-gray-800 transition-colors"
+                    id="preview-bg">
+                    <div id="preview-box"
+                        class="w-48 h-48 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl transition-all duration-300">
+                        Preview
+                    </div>
+                </div>
+
+                <!-- Code Output -->
+                <div class="glass-panel p-6 rounded-2xl relative group">
+                    <h3 class="text-lg font-bold mb-4 text-gray-900 dark:text-white">Código CSS</h3>
+                    <pre
+                        class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code id="css-output">box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.3);</code></pre>
+                    <button id="copy-btn"
+                        class="absolute top-6 right-6 p-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors opacity-0 group-hover:opacity-100">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

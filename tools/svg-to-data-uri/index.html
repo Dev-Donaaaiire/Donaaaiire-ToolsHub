@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG a Data URI - ToolsHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#0f172a',
+                        card: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-dark text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+    <!-- Navbar -->
+    <nav
+        class="fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-dark/80 backdrop-blur-md">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="../../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span
+                    class="self-center text-2xl font-bold whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">ToolsHub</span>
+            </a>
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <a href="../../index.html"
+                    class="text-white bg-primary hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary dark:hover:bg-blue-700 dark:focus:ring-blue-800">Volver</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-24 pb-12 px-4 mx-auto max-w-screen-xl">
+        <div class="text-center mb-12">
+            <h1
+                class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl dark:text-white">
+                SVG a <span class="text-pink-500">Data URI</span></h1>
+            <p class="text-lg font-normal text-gray-500 dark:text-gray-400">Convierte código SVG a Data URI para usar en
+                CSS o HTML.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Input -->
+            <div class="glass-panel p-6 rounded-2xl flex flex-col h-[600px]">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white">SVG Input</h2>
+                    <label
+                        class="text-sm bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-3 py-1 rounded cursor-pointer transition-colors">
+                        Subir Archivo
+                        <input type="file" id="file-input" accept=".svg" class="hidden">
+                    </label>
+                </div>
+                <textarea id="svg-input"
+                    class="flex-grow w-full p-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl resize-none focus:ring-pink-500 focus:border-pink-500 font-mono text-sm"
+                    placeholder='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">...</svg>'></textarea>
+            </div>
+
+            <!-- Output & Preview -->
+            <div class="space-y-6 h-[600px] flex flex-col">
+                <!-- Preview -->
+                <div
+                    class="glass-panel p-6 rounded-2xl flex-grow flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-800 overflow-hidden relative">
+                    <div class="absolute inset-0 checkered-bg opacity-10 pointer-events-none"></div>
+                    <img id="preview-img" class="max-w-full max-h-[200px] z-10" alt="Preview">
+                    <p id="preview-placeholder" class="text-gray-400 text-sm">Previsualización</p>
+                </div>
+
+                <!-- Output -->
+                <div class="glass-panel p-6 rounded-2xl">
+                    <div class="flex justify-between items-center mb-2">
+                        <h2 class="font-bold text-gray-900 dark:text-white">Data URI (Base64)</h2>
+                        <button id="copy-b64-btn"
+                            class="text-xs bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded transition-colors">Copiar</button>
+                    </div>
+                    <input type="text" id="output-b64" readonly
+                        class="w-full p-2 bg-gray-900 text-gray-100 border border-gray-700 rounded-lg font-mono text-xs mb-4">
+
+                    <div class="flex justify-between items-center mb-2">
+                        <h2 class="font-bold text-gray-900 dark:text-white">URL Encoded (CSS ready)</h2>
+                        <button id="copy-url-btn"
+                            class="text-xs bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded transition-colors">Copiar</button>
+                    </div>
+                    <input type="text" id="output-url" readonly
+                        class="w-full p-2 bg-gray-900 text-gray-100 border border-gray-700 rounded-lg font-mono text-xs">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
