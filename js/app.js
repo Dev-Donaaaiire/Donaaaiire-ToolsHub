@@ -30,10 +30,6 @@ window.copyToClipboard = async (text) => {
 };
 
 // Theme Toggle Logic
-// Redirect to the index page when accessed directly on the specified domain
-if (window.location.hostname === 'donaaaiire-tools-hub.vercel.app' && window.location.pathname === '/') {
-    window.location.href = '/index.html';
-}
 const themeToggleBtn = document.getElementById('theme-toggle');
 const darkIcon = document.getElementById('theme-toggle-dark-icon');
 const lightIcon = document.getElementById('theme-toggle-light-icon');
