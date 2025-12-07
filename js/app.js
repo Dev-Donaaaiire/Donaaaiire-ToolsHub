@@ -33,7 +33,7 @@ window.copyToClipboard = async (text) => {
 document.addEventListener('DOMContentLoaded', () => {
     // Redirect to Google when the site is accessed directly on the production domain
     if (window.location.hostname === 'donaaaiire-tools-hub.vercel.app') {
-        window.location.href = 'donaaaiire-tools-hub.vercel.app/index.html';
+        window.location.href = '/index.html';
         return; // stop further execution
     }
     const themeToggleBtn = document.getElementById('theme-toggle');
