@@ -196,4 +196,61 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start typing effect with a small delay
         setTimeout(typeWriter, 500);
     }
+
+    // Fuzzy Search Implementation
+    const searchInput = document.getElementById('tool-search');
+    // Select only tool cards inside the tools grid to avoid selecting other glass-cards if added later
+    const toolsGrid = document.querySelector('section.pb-24 .grid');
+    const cards = toolsGrid ? toolsGrid.querySelectorAll('.glass-card') : [];
+
+    if (searchInput && cards.length > 0) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            cards.forEach(card => {
+                // Get text content from h3 (title) and p (description)
+                const titleElement = card.querySelector('h3');
+                const descElement = card.querySelector('p');
+
+                const title = titleElement ? titleElement.textContent.toLowerCase() : '';
+                const description = descElement ? descElement.textContent.toLowerCase() : '';
+
+                // Combine them for searching. We prioritize matches in title then description
+                const content = title + ' ' + description;
+
+                // 1. Check for Contiguous/Exact substring match (Priority 1)
+                const isContiguous = content.includes(searchTerm);
+
+                // 2. Check for Fuzzy match (Priority 2)
+                let isFuzzy = true;
+                let searchIndex = 0;
+
+                for (let i = 0; i < searchTerm.length; i++) {
+                    const char = searchTerm[i];
+                    // Find the character starting from the position of the last found character + 1
+                    const index = content.indexOf(char, searchIndex);
+
+                    if (index === -1) {
+                        isFuzzy = false;
+                        break;
+                    }
+                    searchIndex = index + 1; // Update position for next search
+                }
+
+                if (isContiguous) {
+                    card.style.display = ''; // Restore display
+                    card.classList.remove('hidden');
+                    card.style.order = '-1'; // Show first
+                } else if (isFuzzy) {
+                    card.style.display = ''; // Restore display
+                    card.classList.remove('hidden');
+                    card.style.order = '0'; // Show after contiguous
+                } else {
+                    card.style.display = 'none'; // Hide the card
+                    card.classList.add('hidden');
+                    card.style.order = '0';
+                }
+            });
+        });
+    }
 });
