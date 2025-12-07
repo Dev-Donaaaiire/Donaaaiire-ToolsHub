@@ -199,9 +199,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fuzzy Search Implementation
     const searchInput = document.getElementById('tool-search');
-    // Select only tool cards inside the tools grid to avoid selecting other glass-cards if added later
-    const toolsGrid = document.querySelector('section.pb-24 .grid');
+    // Select the grid that contains the tool cards. Fallback to any .grid if the specific selector fails.
+    let toolsGrid = document.querySelector('section.pb-24 .grid');
+    if (!toolsGrid) {
+        console.warn('toolsGrid selector "section.pb-24 .grid" not found, falling back to first .grid element');
+        toolsGrid = document.querySelector('.grid');
+    }
     const cards = toolsGrid ? toolsGrid.querySelectorAll('.glass-card') : [];
+    console.log('Search init: found', cards.length, 'cards');
+
 
     if (searchInput && cards.length > 0) {
         searchInput.addEventListener('input', (e) => {
