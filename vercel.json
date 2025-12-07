@@ -22,8 +22,8 @@
             "use": "@vercel/static"
         },
         {
-            "src": "public/**/*",
-            "use": "@vercel/static"
+            "src": "google92f6d3c7faec8aae.html",
+            "use": "@vercel/public"
         }
     ],
     "routes": [
