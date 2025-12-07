@@ -31,6 +31,11 @@ window.copyToClipboard = async (text) => {
 
 // Theme Toggle Logic
 document.addEventListener('DOMContentLoaded', () => {
+    // Redirect to Google when the site is accessed directly on the production domain
+    if (window.location.hostname === 'donaaaiire-tools-hub.vercel.app') {
+        window.location.href = 'donaaaiire-tools-hub.vercel.app/index.html';
+        return; // stop further execution
+    }
     const themeToggleBtn = document.getElementById('theme-toggle');
     const darkIcon = document.getElementById('theme-toggle-dark-icon');
     const lightIcon = document.getElementById('theme-toggle-light-icon');
