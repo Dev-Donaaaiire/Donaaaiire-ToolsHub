@@ -262,4 +262,3 @@ if (searchInput && cards.length > 0) {
         });
     });
 }
-});
